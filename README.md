@@ -1,2 +1,3 @@
-# incremental-sml
-Modular, optimizing and incremental compilation framework for Standard ML.
+# Incremental SML
+
+Incremental compilation framework for Standard ML.
