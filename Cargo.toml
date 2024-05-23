@@ -1,0 +1,9 @@
+[package]
+name = "incremental-sml"
+version = "0.1.0"
+edition = "2021"
+description = "Incremental compilation framework for Standard ML"
+repository = "https://github.com/davidmaamoaix/incremental-sml.git"
+
+[dependencies]
+nom = "7.1.3"
