@@ -2,6 +2,7 @@ pub mod parser;
 pub mod atom;
 pub mod compile;
 pub mod loader;
+pub mod ast;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

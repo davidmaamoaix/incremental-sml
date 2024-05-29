@@ -1,28 +1,20 @@
-use nom::AsBytes;
+use nom::{ AsBytes, Compare, IResult };
+use nom::bytes::complete::tag;
+use nom_locate::{ LocatedSpan };
+use crate::atom::span::Span;
+use string_interner::symbol::SymbolU32;
 
-pub struct ParseCtx<'a> {
-    offset: u32,
-    source: &'a str,
+type Input<'a> = LocatedSpan<&'a str, SymbolU32>;
 
-    line: u32,
-    col: u32
-}
-
-impl ParseCtx<'_> {
-    pub fn new(source: &str) -> ParseCtx {
-        ParseCtx {
-            offset: 0,
-            source,
-            line: 1,
-            col: 1
-        }
+fn to_span(s: Input) -> Span {
+    let offset = s.location_offset();
+    Span {
+        lo: offset,
+        hi: offset + s.fragment().len(),
+        src: s.extra
     }
 }
 
-impl<'a> AsBytes for ParseCtx<'a> {
-    fn as_bytes(&self) -> &[u8] {
-        self.source.as_bytes()
-    }
+fn parse_iden(s: Input) -> IResult<Input, &str> {
+    todo!()
 }
-
-
