@@ -1,2 +1,2 @@
-mod parser;
-mod checks;
+mod combinator;
+mod check;
