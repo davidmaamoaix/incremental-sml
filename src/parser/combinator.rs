@@ -1,15 +1,11 @@
 use nom::{
-    branch::alt,
-    character::complete::{ alpha1, alphanumeric1 },
-    bytes::complete::{ tag },
-    combinator::{ recognize, verify },
-    multi::many0_count,
-    sequence::{ pair, preceded },
-    IResult
+    branch::alt, bytes::complete::tag, character::complete::{ alpha1, alphanumeric1 }, combinator::{ recognize, verify }, error::ErrorKind, multi::many0_count, sequence::{ pair, preceded }, IResult
 };
 use nom_locate::LocatedSpan;
 use crate::atom::span::Span;
 use string_interner::symbol::SymbolU32;
+
+use super::check::{ is_keyword, is_reserved_op };
 
 // While `Input` is similar with the `Span` defined in this compiler, the
 // latter is used specifically for denoting a region in the source location.
@@ -26,12 +22,24 @@ fn to_span(s: Input) -> Span {
     }
 }
 
-pub fn parse_iden(s: Input) -> IResult<Input, &str> {
-    let (s, iden) = recognize(
+fn err<A, B>(s: A, code: ErrorKind) -> IResult<A, B> {
+    Err(nom::Err::Error(nom::error::Error{input: s, code: ErrorKind::Fail}))
+}
+
+pub fn parse_name_id(s: Input) -> IResult<Input, Input> {
+    let (res, iden) = recognize(
         pair(
             alt((alpha1, tag("_"))),
             many0_count(alt((alphanumeric1, tag("_"))))
         )
     )(s)?;
-    Ok((s, iden.fragment()))
+
+    let text = iden.fragment();
+    if is_keyword(text) {
+        return err(res, ErrorKind::Fail);
+    }
+
+    Ok((res, iden))
 }
+
+
