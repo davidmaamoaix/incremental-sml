@@ -41,22 +41,11 @@ static RESERVED_KW: Set<&'static str> = phf_set! {
     "signature",
     "struct",
     "structure",
-    "where"
-};
-
-// Note: a lot of these listed operators cannot even be validly formed as they
-// contains symbols outside of the set of symbols that are legal characters of
-// a user-defined operator. However, they will still be included in this list
-// as `sml97-defn` specified them as "reserved words".
-static RESERVED_OP: Set<&'static str> = phf_set! {
+    "where",
     "(", ")", "[", "]", "{", "}", ",", ":", ";",
     "...", "_", "|", "=", "=>", "->", "#", ":>"
 };
 
 pub fn is_keyword(s: &str) -> bool {
     RESERVED_KW.contains(s)
-}
-
-pub fn is_reserved_op(s: &str) -> bool {
-    RESERVED_OP.contains(s)
 }

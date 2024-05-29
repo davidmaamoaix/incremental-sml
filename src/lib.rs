@@ -3,6 +3,7 @@ pub mod atom;
 pub mod compile;
 pub mod loader;
 pub mod ast;
+pub mod lexer;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

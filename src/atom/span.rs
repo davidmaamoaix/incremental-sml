@@ -12,6 +12,9 @@ impl Span {
         Span {
             lo: self.lo.min(other.lo),
             hi: self.hi.max(other.hi),
+
+            // There will never be merging of spans across source files.
+            // TODO: specify this in design doc.
             src: self.src
         }
     }
