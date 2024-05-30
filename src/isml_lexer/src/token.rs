@@ -1,6 +1,6 @@
 use string_interner::symbol::SymbolU32;
 
-use crate::atom::span::Span;
+use isml_atom::span::Span;
 
 // The types of literals. Note that a string literal might not match the
 // corresponding sequence in the source file due to preprocessing, so they get

@@ -1,2 +1,2 @@
-mod token;
 mod check;
+mod token;
