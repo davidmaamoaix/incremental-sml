@@ -1,6 +1,10 @@
 use phf::{phf_set, Set};
 
-static RESERVED_KW: Set<&'static str> = phf_set! {
+use isml_macros::gen_keyword_defs;
+
+// static RESERVED_KW: Set<&'static str> = phf_set! {
+
+gen_keyword_defs! {
     "abstype",
     "and",
     "andalso",
@@ -42,10 +46,25 @@ static RESERVED_KW: Set<&'static str> = phf_set! {
     "struct",
     "structure",
     "where",
-    "(", ")", "[", "]", "{", "}", ",", ":", ";",
-    "...", "_", "|", "=", "=>", "->", "#", ":>"
-};
+    "(": LPAREN,
+    ")": RPAREN,
+    "[": LBRACK,
+    "]": RBRACK,
+    "{": LBRACE,
+    "}": RBRACE,
+    ",": COMMA,
+    ":": COLON,
+    ";": SCOLON,
+    "...": ELLIPS,
+    "_": USCORE,
+    "|": VBAR,
+    "=>": DARROW,
+    "->": ARROW,
+    "#": HASH,
+    ":>": ASCRIB
+}
 
 pub fn is_keyword(s: &str) -> bool {
-    RESERVED_KW.contains(s)
+    // RESERVED_KW.contains(s)
+    false
 }

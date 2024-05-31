@@ -9,3 +9,4 @@ edition = "2021"
 phf = { version = "0.11.2", features = ["macros"] }
 string-interner = "0.17.0"
 isml_atom ={ path = "../isml_atom"}
+isml_macros ={ path = "../isml_macros"}
