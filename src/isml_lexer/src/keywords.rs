@@ -1,5 +1,3 @@
-use phf::{phf_set, Set};
-
 use isml_macros::gen_keyword_defs;
 
 // static RESERVED_KW: Set<&'static str> = phf_set! {
@@ -65,6 +63,9 @@ gen_keyword_defs! {
 }
 
 pub fn is_keyword(s: &str) -> bool {
-    // RESERVED_KW.contains(s)
-    false
+    LIT_TO_KW.contains_key(s)
+}
+
+pub fn get_keyword(s: &str) -> Option<Kw> {
+    LIT_TO_KW.get(s).copied()
 }

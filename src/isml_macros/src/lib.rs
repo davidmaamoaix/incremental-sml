@@ -63,6 +63,8 @@ fn internal_gen_keyword_defs(tokens: TokenStream) -> TokenStream {
     };
 
     let mut enum_stream = quote!{};
+    let mut map_stream = quote!{};
+    let mut display_stream = quote!{};
 
     for kw in input.0.iter() {
         let ident = Ident::new(&kw.ident(), Span::call_site());
@@ -71,12 +73,36 @@ fn internal_gen_keyword_defs(tokens: TokenStream) -> TokenStream {
         enum_stream.extend(quote!{
             #ident,
         });
+
+        map_stream.extend(quote!{
+            #lit => Kw::#ident,
+        });
+
+        display_stream.extend(quote!{
+            #ident => #lit,
+        });
     }
 
     return quote!{
+        use phf::{ phf_map, Map };
+
         #[derive(Debug, Clone, Copy, Eq, PartialEq)]
         pub enum Kw {
             #enum_stream
         }
+
+        impl std::fmt::Display for Kw {
+            fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                let repr = match self {
+                    #display_stream
+                };
+
+                write!(f, "{}", repr)
+            }
+        }
+
+        pub static LIT_TO_KW: Map<&'static str, Kw> = phf_map! {
+            #map_stream
+        };
     };
 }
